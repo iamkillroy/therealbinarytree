@@ -44,8 +44,10 @@ class BinarySearchTree:
         """This function will add the entry to the BST"""
         if self._root is None:
             self._root = BinarySearchTree.BinaryNode(entry)
+            self._len += 1
             return  # return, we've addded the first element
         self._rec_add(entry, currentNode=self._root)
+        self._len += 1
 
     def _rec_add(self, entry, currentNode):
         """Recursively adds based on the currentNode"""
@@ -77,3 +79,22 @@ class BinarySearchTree:
         else:
             raise Exception("Incorrect entry type")
         return
+
+    def display(self):
+        # okay this print we need to handle elegantly
+        # first let's go get the bottommost node
+        # we're gonna increment this variable that determines the center
+        # spacing based on the leftmost node
+        centerSpacing = 5
+        traversalBNode = self._root
+        if traversalBNode == None:
+            return  # explicit null check
+        while traversalBNode.has_left():
+            traversalBNode = traversalBNode.get_left()
+            centerSpacing += 4
+        print(
+            " " * (centerSpacing + 1 - len(self._root.get_entry()))
+            + "("
+            + self._root.get_entry()
+            + ")"
+        )
